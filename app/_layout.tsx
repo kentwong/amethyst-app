@@ -1,6 +1,15 @@
 import { useEffect } from 'react';
 import { Stack, useSegments, useRouter, Href } from 'expo-router';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
+import { ActivityIndicator, View } from 'react-native';
+
+function LoadingScreen() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <ActivityIndicator size="large" />
+    </View>
+  );
+}
 
 function RootLayoutNav() {
   const { user, isLoading } = useAuth();
@@ -18,6 +27,10 @@ function RootLayoutNav() {
       }
     }
   }, [user, segments, isLoading]);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
