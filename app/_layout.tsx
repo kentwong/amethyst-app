@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Stack, useSegments, useRouter } from 'expo-router';
+import { Stack, useSegments, useRouter, Href } from 'expo-router';
 import { AuthProvider, useAuth } from '@/context/AuthContext';
 
 function RootLayoutNav() {
@@ -9,13 +9,12 @@ function RootLayoutNav() {
 
   useEffect(() => {
     if (!isLoading) {
-      const inAuthGroup = segments[0] === '(auth)';
-      const inTabsGroup = segments[0] === '(tabs)';
+      const inAuthGroup = (segments[0] as string) === '(auth)';
 
       if (!user && !inAuthGroup) {
-        router.replace('/(auth)/login');
+        router.replace('/(auth)/login' as Href);
       } else if (user && inAuthGroup) {
-        router.replace('/(tabs)/home');
+        router.replace('/(tabs)/home' as Href);
       }
     }
   }, [user, segments, isLoading]);

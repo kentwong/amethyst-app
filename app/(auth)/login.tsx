@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { Link } from 'expo-router';
+import { Href, Link } from 'expo-router';
 import { auth } from '@/config/firebase';
+
+const REGISTER_ROUTE = '/(auth)/register' as Href;
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -34,7 +36,7 @@ export default function Login() {
         style={styles.input}
       />
       <Button title="Login" onPress={handleLogin} />
-      <Link href="/(auth)/register" asChild>
+      <Link href={REGISTER_ROUTE}>
         <Button title="Create Account" />
       </Link>
     </View>
