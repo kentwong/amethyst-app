@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { Link } from 'expo-router';
 import { auth } from '@/config/firebase';
 
-export default function Login() {
+export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await createUserWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
       Alert.alert('Error', error.message);
     }
@@ -33,9 +33,9 @@ export default function Login() {
         secureTextEntry
         style={styles.input}
       />
-      <Button title="Login" onPress={handleLogin} />
-      <Link href="/(auth)/register" asChild>
-        <Button title="Create Account" />
+      <Button title="Register" onPress={handleRegister} />
+      <Link href="/(auth)/login" asChild>
+        <Button title="Back to Login" />
       </Link>
     </View>
   );

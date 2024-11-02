@@ -1,9 +1,6 @@
 // app/config/firebase.ts
-import { initializeApp, FirebaseApp } from 'firebase/app';
-import { getAuth, Auth, initializeAuth, getReactNativePersistence } from 'firebase/auth';
-import { getFirestore, Firestore } from 'firebase/firestore';
-import { getStorage, FirebaseStorage } from 'firebase/storage';
-import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
 // Validate environment variables
 const validateEnvVariables = () => {
@@ -23,7 +20,6 @@ const validateEnvVariables = () => {
   }
 };
 
-// Call validation
 validateEnvVariables();
 
 const firebaseConfig = {
@@ -33,43 +29,7 @@ const firebaseConfig = {
   storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
-  // Optional: Include only if you're using Analytics
-  // measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase with security measures
-let app: FirebaseApp;
-let auth: Auth;
-let db: Firestore;
-let storage: FirebaseStorage;
-
-function initializeFirebase() {
-  try {
-    app = initializeApp(firebaseConfig);
-    auth = initializeAuth(app, {
-      persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-    });
-    db = getFirestore(app);
-    storage = getStorage(app);
-
-    // Add security monitoring
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        // Log security-relevant events
-        console.log('User authenticated:', user.uid);
-      }
-    });
-  } catch (error) {
-    console.error('Error initializing Firebase:', error);
-    throw error;
-  }
-}
-
-// Initialize Firebase on app startup
-initializeFirebase();
-
-// Export initialized instances
-export { app, auth, db, storage };
-
-// Export types
-export type { FirebaseApp, Auth, Firestore, FirebaseStorage };
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
