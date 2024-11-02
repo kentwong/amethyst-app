@@ -36,7 +36,7 @@ export default function Login() {
         style={styles.input}
       />
       <Button title="Login" onPress={handleLogin} />
-      <Link href={REGISTER_ROUTE}>
+      <Link href={REGISTER_ROUTE} asChild>
         <Button title="Create Account" />
       </Link>
     </View>

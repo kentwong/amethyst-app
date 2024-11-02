@@ -36,7 +36,7 @@ export default function Register() {
         style={styles.input}
       />
       <Button title="Register" onPress={handleRegister} />
-      <Link href={LOGIN_ROUTE}>
+      <Link href={LOGIN_ROUTE} asChild>
         <Button title="Back to Login" />
       </Link>
     </View>
